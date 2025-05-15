@@ -36,4 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
+### DB Credential ###
+.env
+
 study/src/test/java/algorithm/navertest

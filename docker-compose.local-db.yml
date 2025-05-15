@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres-shard-1:
+    image: postgres:16
+    container_name: postgres1
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER1}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD1}
+      POSTGRES_DB: ${POSTGRES_DB1}
+    ports:
+      - "${POSTGRES1_PORT}:5432"
+
+  postgres-shard-2:
+    image: postgres:16
+    container_name: postgres2
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER2}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD2}
+      POSTGRES_DB: ${POSTGRES_DB2}
+    ports:
+      - "${POSTGRES2_PORT}:5432"

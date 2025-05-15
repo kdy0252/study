@@ -1,5 +1,17 @@
 spring:
+  config:
+    import:
+      - optional:classpath:/config/
+      #      - optional:classpath:/config/local/
+      - optional:classpath:/config/localdb/
+      #      - optional:classpath:/config/dev/
+      #      - optional:classpath:/config/prod/
   application:
     name: demo
-  liquibase:
-    enabled: false
+  profiles:
+    default: local-db
+    group:
+      local-db: local-db, local-db-liquibase
+  #      local:
+  #      dev:
+  #      prod:

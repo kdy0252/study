@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    primary:
+      url: jdbc:postgresql://localhost:${POSTGRES1_PORT}/db1
+      username: ${POSTGRES_USER1}
+      password: ${POSTGRES_PASSWORD1}
+      driver-class-name: org.postgresql.Driver
+    shard:
+      url: jdbc:postgresql://localhost:${POSTGRES2_PORT}/db2
+      username: ${POSTGRES_USER2}
+      password: ${POSTGRES_PASSWORD2}
+      driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
