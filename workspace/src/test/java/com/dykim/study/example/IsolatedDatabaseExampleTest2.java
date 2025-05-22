@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Slf4j
 @SpringBootTest
-class IsolatedDatabaseExampleTest extends IsolatedDatabaseTest {
+class IsolatedDatabaseExampleTest2 extends IsolatedDatabaseTest {
 
     @Test
     void contextLoads() {

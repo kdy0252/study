@@ -3,31 +3,31 @@ package com.dykim.study.support.base;
 import com.dykim.study.support.container.SharedPostgresTestConfig;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.springframework.test.annotation.DirtiesContext;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public abstract class IsolatedDatabaseTest {
-    protected static String dbName;
 
-    static {
-        dbName = "testdb_" + UUID.randomUUID().toString().replace("-", "_");
+    protected String dbName;
+
+    @BeforeAll
+    void setupDb() {
+        String className = getClass().getSimpleName().toLowerCase();
+        String uuidSuffix = UUID.randomUUID().toString().replace("-", "").substring(0, 8); // 짧고 고유
+        dbName = "testdb_" + className + "_" + uuidSuffix;
         SharedPostgresTestConfig.createDatabase(dbName);
-    }
 
-    @DynamicPropertySource
-    static void overrideProps(DynamicPropertyRegistry registry) {
-        PostgreSQLContainer<?> container = SharedPostgresTestConfig.getInstance();
-        registry.add("spring.datasource.username", container::getUsername);
-        registry.add("spring.datasource.password", container::getPassword);
-        registry.add("spring.datasource.url", () ->
-            container.getJdbcUrl().replace("/template1", "/" + dbName));
+        // 강제로 설정 주입
+        System.setProperty("spring.datasource.url", SharedPostgresTestConfig.getJdbcUrl(dbName));
+        System.setProperty("spring.datasource.username", SharedPostgresTestConfig.getInstance().getUsername());
+        System.setProperty("spring.datasource.password", SharedPostgresTestConfig.getInstance().getPassword());
     }
 
     @AfterAll
-    void cleanup() {
+    void cleanupDb() {
         SharedPostgresTestConfig.dropDatabase(dbName);
     }
 }
