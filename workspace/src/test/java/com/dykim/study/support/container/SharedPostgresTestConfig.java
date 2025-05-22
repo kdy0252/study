@@ -11,7 +11,7 @@ public class SharedPostgresTestConfig {
     private static final DockerImageName IMAGE = DockerImageName.parse("postgres:15.3");
     private static final PostgreSQLContainer<?> POSTGRES_CONTAINER =
         new PostgreSQLContainer<>(IMAGE)
-            .withDatabaseName("template-dummy") // template1 사용 방지
+            .withDatabaseName("template-dummy")
             .withUsername("test")
             .withPassword("test")
             .withReuse(true);
@@ -45,7 +45,6 @@ public class SharedPostgresTestConfig {
             POSTGRES_CONTAINER.getPassword());
             Statement stmt = conn.createStatement()) {
 
-            // 종료 전에 연결된 세션을 모두 끊어야 drop 가능
             stmt.execute("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '" + dbName + "'");
             stmt.execute("DROP DATABASE IF EXISTS " + dbName);
 

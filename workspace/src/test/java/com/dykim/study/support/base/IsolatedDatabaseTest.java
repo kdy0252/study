@@ -16,11 +16,10 @@ public abstract class IsolatedDatabaseTest {
     @BeforeAll
     void setupDb() {
         String className = getClass().getSimpleName().toLowerCase();
-        String uuidSuffix = UUID.randomUUID().toString().replace("-", "").substring(0, 8); // 짧고 고유
+        String uuidSuffix = UUID.randomUUID().toString().replace("-", "");
         dbName = "testdb_" + className + "_" + uuidSuffix;
         SharedPostgresTestConfig.createDatabase(dbName);
 
-        // 강제로 설정 주입
         System.setProperty("spring.datasource.url", SharedPostgresTestConfig.getJdbcUrl(dbName));
         System.setProperty("spring.datasource.username", SharedPostgresTestConfig.getInstance().getUsername());
         System.setProperty("spring.datasource.password", SharedPostgresTestConfig.getInstance().getPassword());
