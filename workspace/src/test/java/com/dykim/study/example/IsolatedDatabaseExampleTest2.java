@@ -11,7 +11,7 @@ class IsolatedDatabaseExampleTest2 extends IsolatedDatabaseTest {
 
     @Test
     void contextLoads() {
-        log.info("db name: {}", dbName);
+        log.info("db name: {}", getDbNameTL().get());
     }
 
 }
