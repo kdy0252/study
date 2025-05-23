@@ -49,6 +49,10 @@ dependencies {
 
     implementation("io.minio:minio:8.5.6")
 
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.auth0:java-jwt:4.2.1")
+
     implementation("org.springframework.amqp:spring-rabbit-stream")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.springframework.modulith:spring-modulith-events-api")
@@ -68,6 +72,8 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.amqp:spring-rabbit-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
+    testImplementation("org.springframework.modulith:spring-modulith-events-jpa")
+
 
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
